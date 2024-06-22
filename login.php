@@ -1,9 +1,16 @@
 <?php
 require ('top.php');
 ?>
+
+<style>
+    .field_error {
+        color: red;
+        font-size: 15px;
+    }
+</style>
 <!-- Start Bradcaump area -->
 <div class="ht__bradcaump__area"
-    style="background: rgba(0, 0, 0, 0) url(images/bg/4.jpg) no-repeat scroll center center / cover ;">
+    style="background: rgba(0, 0, 0, 0) url(images/bg/category-bg.jpg) no-repeat scroll center center / cover ;">
     <div class="ht__bradcaump__wrap">
         <div class="container">
             <div class="row">
@@ -12,7 +19,7 @@ require ('top.php');
                         <nav class="bradcaump-inner">
                             <a class="breadcrumb-item" href="index.html">Home</a>
                             <span class="brd-separetor"><i class="zmdi zmdi-chevron-right"></i></span>
-                            <span class="breadcrumb-item active">Login</span>
+                            <span class="breadcrumb-item active">Login/Register</span>
                         </nav>
                     </div>
                 </div>
@@ -33,16 +40,20 @@ require ('top.php');
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <form id="contact-form" action="#" method="post">
+                        <form id="login-form" action="#" method="post">
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Email*" style="width:100%">
+                                    <input type="text" name="email" placeholder="Your Email*" required
+                                        style="width:100%">
                                 </div>
+
                             </div>
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Password*" style="width:100%">
+                                    <input type="password" name="password" placeholder="Your Password*" required
+                                        style="width:100%">
                                 </div>
+
                             </div>
 
                             <div class="contact-btn">
@@ -66,33 +77,41 @@ require ('top.php');
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <form id="contact-form" action="#" method="post">
+                        <form id="register-form" method="post">
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Name*" style="width:100%">
+                                    <input type="text" name="name" id="name" placeholder="Your Name*"
+                                        style="width:100%">
                                 </div>
+                                <span class="field_error" id="name_error"></span>
                             </div>
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Email*" style="width:100%">
+                                    <input type="text" name="email" id="email" placeholder="Your Email*"
+                                        style="width:100%">
                                 </div>
+                                <span class="field_error" id="email_error"></span>
                             </div>
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Mobile*" style="width:100%">
+                                    <input type="text" name="mobile" id="mobile" placeholder="Your Mobile*"
+                                        style="width:100%">
                                 </div>
+                                <span class="field_error" id="mobile_error"></span>
                             </div>
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="name" placeholder="Your Password*" style="width:100%">
+                                    <input type="password" name="password" id="password" placeholder="Your Password*"
+                                        style="width:100%">
                                 </div>
+                                <span class="field_error" id="password_error"></span>
                             </div>
 
                             <div class="contact-btn">
-                                <button type="submit" class="fv-btn">Register</button>
+                                <button type="button" class="fv-btn" onclick="user_register()">Register</button>
                             </div>
                         </form>
-                        <div class="form-output">
+                        <div class="form-output register_msg">
                             <p class="form-messege"></p>
                         </div>
                     </div>
@@ -102,8 +121,49 @@ require ('top.php');
 
         </div>
 </section>
-<!-- End Contact Area -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+<script>
+    function user_register() {
+        jQuery('.field_erro').html('');
+        var name = jQuery("#name").val();
+        var email = jQuery("#email").val();
+        var mobile = jQuery("#mobile").val();
+        var password = jQuery("#password").val();
+        var is_error = '';
+
+
+        if (name == "") {
+            jQuery('#name_error').html('Please enter your name');
+            is_error = 'yes';
+        } if (email == "") {
+            jQuery('#email_error').html('Please enter your email');
+            is_error = 'yes';
+        } if (mobile == "") {
+            jQuery('#mobile_error').html('Please enter your mobile number');
+            is_error = 'yes';
+        } if (password == "") {
+            jQuery('#password_error').html('Please enter your password');
+            is_error = 'yes';
+        }
+
+        if (is_error == '') {
+            jQuery.ajax({
+                url: 'register_submit.php',
+                type: 'post',
+                data: 'name=' + name + '&email=' + email + '&mobile=' + mobile + '&password=' + password,
+                success: function (result) {
+                    if (result == 'present') {
+                        jQuery('#email_present').html('Email id already exits');
+                    }
+                    if (result == 'insert') {
+                        jQuery('.register_msg p').html('Thank you for registeration');
+                    }
+                }
+            });
+        }
+    }
+</script>
 
 
 
