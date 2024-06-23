@@ -7,6 +7,26 @@ require ('top.php');
         color: red;
         font-size: 15px;
     }
+
+    .fv-btn {
+        background: #c43b68 none repeat scroll 0 0;
+        border: 1px solid #c43b68;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        height: 50px;
+        padding: 0 30px;
+        text-transform: uppercase;
+        transition: all 0.4s ease 0s;
+        border-radius: 4px;
+    }
+
+    .fv-btn:hover {
+        background: green;
+        border: 1px solid green;
+        color: #fff;
+    }
 </style>
 <!-- Start Bradcaump area -->
 <div class="ht__bradcaump__area"
@@ -106,7 +126,6 @@ require ('top.php');
                                 </div>
                                 <span class="field_error" id="password_error"></span>
                             </div>
-
                             <div class="contact-btn">
                                 <button type="button" class="fv-btn" onclick="user_register()">Register</button>
                             </div>
@@ -116,33 +135,32 @@ require ('top.php');
                         </div>
                     </div>
                 </div>
-
             </div>
-
-        </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     function user_register() {
-        jQuery('.field_erro').html('');
+        jQuery('.field_error').html('');
         var name = jQuery("#name").val();
         var email = jQuery("#email").val();
         var mobile = jQuery("#mobile").val();
         var password = jQuery("#password").val();
         var is_error = '';
 
-
         if (name == "") {
             jQuery('#name_error').html('Please enter your name');
             is_error = 'yes';
-        } if (email == "") {
+        }
+        if (email == "") {
             jQuery('#email_error').html('Please enter your email');
             is_error = 'yes';
-        } if (mobile == "") {
+        }
+        if (mobile == "") {
             jQuery('#mobile_error').html('Please enter your mobile number');
             is_error = 'yes';
-        } if (password == "") {
+        }
+        if (password == "") {
             jQuery('#password_error').html('Please enter your password');
             is_error = 'yes';
         }
@@ -151,20 +169,27 @@ require ('top.php');
             jQuery.ajax({
                 url: 'register_submit.php',
                 type: 'post',
-                data: 'name=' + name + '&email=' + email + '&mobile=' + mobile + '&password=' + password,
+                data: { name: name, email: email, mobile: mobile, password: password },
                 success: function (result) {
                     if (result == 'present') {
-                        jQuery('#email_present').html('Email id already exits');
+                        jQuery('#email_present').html('Email id already exists');
                     }
-                    if (result == 'insert') {
-                        jQuery('.register_msg p').html('Thank you for registeration');
+                    else if (result == 'insert') {
+                        // Reset form fields
+                        jQuery("#name").val('');
+                        jQuery("#email").val('');
+                        jQuery("#mobile").val('');
+                        jQuery("#password").val('');
+
+                        // Show alert immediately
+                        alert('Thank you for registration. Please verify your email.');
                     }
                 }
             });
         }
     }
+
+
 </script>
-
-
 
 <?php require ('footer.php'); ?>

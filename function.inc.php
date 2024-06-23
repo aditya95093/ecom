@@ -43,4 +43,5 @@ function get_product($con, $limit = '', $cat_id = '', $product_id = '')
     }
     return $data;
 }
+
 ?>

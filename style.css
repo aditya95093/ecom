@@ -2845,9 +2845,9 @@ a.shipping-calculator-button:hover{
     border-radius: 4px;
 }
 .fv-btn:hover {
-    background: orangered;
-    border: 1px solid orangered;
-    color: orangered;
+    background: green;
+    border: 1px solid green;
+    color: #fff;
 }
 .fv-btn i {
     padding-right: 9px;
