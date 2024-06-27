@@ -1,11 +1,15 @@
 <?php
 require ('connection.inc.php');
 require ('function.inc.php');
+require('add_to_cart.inc.php');
 $cat_res = mysqli_query($con, "SELECT * FROM categories where status = 1 order by categories asc");
 $cat_arr = array();
 while ($row = mysqli_fetch_assoc($cat_res)) {
    $cat_arr[] = $row;
 }
+
+$obj = new add_to_cart();
+$totalProduct = $obj->totalProduct();
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -86,7 +90,7 @@ while ($row = mysqli_fetch_assoc($cat_res)) {
                <div class="row">
                   <div class="menumenu__container clearfix">
                      <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
-                        <div class="logo" style="width: 200px; height: 85px; padding: 10px; margin: -10px;">
+                        <div class="logo" style="width: 200px; height: 85px; padding-right: 40px; margin-left: -116px;">
                            <a href="index.php"><img src="images/logo/logo8.png" alt="logo images"
                                  style="width: 53%; height: 100%;"></a>
                         </div>
@@ -140,19 +144,24 @@ while ($row = mysqli_fetch_assoc($cat_res)) {
                      </div>
                      <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
                         <div class="header__right">
-                           <div class="header__search search search__open">
+                           <!--<div class="header__search search search__open">
                               <a href="#"><i class="icon-magnifier icons"></i></a>
-                           </div>
+                           </div>-->
                            <div class="header__account">
                               <a href="#" id="user-icon"><i class="icon-user icons"></i></a>
                               <ul class="Dropdown mega__item" id="dropdown-menu">
-                                 <li><a href="login.php">Login/Register</a></li>
+                                 <?php if (isset($_SESSION['USER_LOGIN'])) {
+                                    echo '<li><a href="logout.php">Logout</a></li>';
+                                 } else {
+                                    echo '<li><a href="login.php">Login/Register</a></li>';
+                                 }
+                                 ?>
                               </ul>
                            </div>
 
                            <div class="htc__shopping__cart">
                               <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
-                              <a href="#"><span class="htc__qua">2</span></a>
+                              <a href="cart.php"><span class="htc__qua"><?php echo $totalProduct?></span></a>
                            </div>
                         </div>
                      </div>

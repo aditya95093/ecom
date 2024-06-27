@@ -14,27 +14,40 @@ if ($product_id > 0) {
 ?>
 <style>
     .fr_btn {
-    background-color: #4CAF50; 
-    color: white; 
-    padding: 10px 20px; 
-    text-align: center; 
-    text-decoration: none; 
-    display: inline-block; 
-    font-size: 16px; 
-    margin: 4px 2px; 
-    cursor: pointer; 
-    border-radius: 12px; 
-    border: none; 
-}
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 12px;
+        border: none;
+    }
 
-.fr_btn:hover {
-    background-color: rosybrown;
-}
+    .fr_btn:hover {
+        background-color: rosybrown;
+    }
 
+    .sin_desc select {
+        width: auto;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .sin_desc select option {
+        padding: 5px;
+    }
 </style>
 
 <div class="ht__bradcaump__area"
-    style="background: rgba(0, 0, 0, 0) url(images/bg/4.jpg) no-repeat scroll center center / cover ;">
+    style="background: rgba(0, 0, 0, 0) url(images/bg/category-bg.jpg) no-repeat scroll center center / cover ;">
     <div class="ht__bradcaump__wrap">
         <div class="container">
             <div class="row">
@@ -87,13 +100,31 @@ if ($product_id > 0) {
                             <div class="sin__desc">
                                 <p><span>Availability:</span> In Stock</p>
                             </div>
+                            <div class="sin_desc">
+                                <p><span>Qty:</span>
+                                    <select id="qty">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                    </select>
+                                </p>
+                            </div>
                             <div class="sin__desc align--left">
                                 <p><span>Categories:</span></p>
                                 <ul class="pro__cat__list">
-                                    <li><a href="#"><?php echo $get_product['0']['categories'] ?></a></li>
+                                    <li><a href="#"><?php echo $get_product['0']['categories'] ?></a>
+                                    </li>
                                 </ul>
                             </div>
-                            <a class="fr_btn" href="#">Add to Cart</a>
+                            <a class="fr_btn" href="javascript:void(0)"
+                                onclick="manage_cart('<?php echo $get_product['0']['id'] ?>', 'add')">Add to Cart</a>
                         </div>
                     </div>
                 </div>
@@ -133,5 +164,23 @@ if ($product_id > 0) {
     </div>
 </section>
 <!-- End Product Description -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+
+    function manage_cart(pid, type) {
+        var qty = jQuery("#qty").val();
+
+        jQuery.ajax({
+            url: 'manage_cart.php',
+            type: 'post',
+            data: 'pid=' + pid + '&qty=' + qty + '&type=' + type,
+            success: function (result) {
+                jQuery('.htc__qua').html(result);
+                alert('Product added successfully');
+            }
+        });
+    }
+</script>
 
 <?php require ('footer.php'); ?>

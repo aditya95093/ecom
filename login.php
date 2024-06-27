@@ -3,30 +3,92 @@ require ('top.php');
 ?>
 
 <style>
-    .field_error {
-        color: red;
-        font-size: 15px;
+/* General styles for the form containers */
+.contact-form-wrap {
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the title */
+.contact-title h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style for the input fields */
+.contact-box input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.contact-box input:focus {
+    border-color: #4CAF50;
+}
+
+/* Style for the error messages */
+.field_error {
+    color: red;
+    font-size: 15px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* Style for the buttons */
+.contact-btn .fv-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.contact-btn .fv-btn:hover {
+    background-color: #45a049;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .contact-form-wrap {
+        margin-bottom: 30px;
     }
 
-    .fv-btn {
-        background: #c43b68 none repeat scroll 0 0;
-        border: 1px solid #c43b68;
-        color: #fff;
-        font-family: 'Poppins', sans-serif;
+    .contact-title h2 {
+        font-size: 20px;
+    }
+
+    .contact-box input {
+        padding: 12px;
         font-size: 14px;
-        font-weight: 600;
-        height: 50px;
-        padding: 0 30px;
-        text-transform: uppercase;
-        transition: all 0.4s ease 0s;
-        border-radius: 4px;
     }
 
-    .fv-btn:hover {
-        background: green;
-        border: 1px solid green;
-        color: #fff;
+    .contact-btn .fv-btn {
+        padding: 12px 15px;
+        font-size: 14px;
     }
+}
+
+/* Message box styles */
+.form-output {
+    margin-top: 20px;
+}
+
+.form-messege {
+    font-size: 16px;
+    color: #4CAF50;
+}
 </style>
 <!-- Start Bradcaump area -->
 <div class="ht__bradcaump__area"
@@ -60,28 +122,30 @@ require ('top.php');
                         </div>
                     </div>
                     <div class="col-xs-12">
-                        <form id="login-form" action="#" method="post">
+                        <form id="login-form" method="post">
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="text" name="email" placeholder="Your Email*" required
+                                    <input type="email" name="login_email" id="login_email" placeholder="Your Email*"
                                         style="width:100%">
                                 </div>
+                                <span class="field_error" id="login_email_error"></span>
 
                             </div>
                             <div class="single-contact-form">
                                 <div class="contact-box name">
-                                    <input type="password" name="password" placeholder="Your Password*" required
-                                        style="width:100%">
+                                    <input type="password" name="login_password" id="login_password"
+                                        placeholder="Your Password*" style="width:100%">
                                 </div>
+                                <span class="field_error" id="login_password_error"></span>
 
                             </div>
 
                             <div class="contact-btn">
-                                <button type="submit" class="fv-btn">Login</button>
+                                <button type="button" onclick="user_login()" class="fv-btn">Login</button>
                             </div>
                         </form>
-                        <div class="form-output">
-                            <p class="form-messege"></p>
+                        <div class="form-output  login_msg">
+                            <p class="form-messege field_error"></p>
                         </div>
                     </div>
                 </div>
@@ -188,6 +252,42 @@ require ('top.php');
             });
         }
     }
+
+    function user_login() {
+    jQuery('.field_error').html('');
+    var email = jQuery("#login_email").val();
+    var password = jQuery("#login_password").val();
+    var is_error = '';
+
+    if (email == "") {
+        jQuery('#login_email_error').html('Please enter your email');
+        is_error = 'yes';
+    }
+    if (password == "") {
+        jQuery('#login_password_error').html('Please enter your password');
+        is_error = 'yes';
+    }
+
+    if (is_error == '') {
+        jQuery.ajax({
+            url: 'login_submit.php',
+            type: 'post',
+            data: {
+                email: email,
+                password: password
+            },
+            success: function (result) {
+                if (result == 'wrong') {
+                    jQuery('.login_msg p').html('Please enter valid login details');
+                } else if (result == 'not_verified') {
+                    jQuery('.login_msg p').html('Your email is not verified. Please verify your email before logging in.');
+                } else if (result == 'valid') {
+                    window.location.href = 'index.php';
+                }
+            }
+        });
+    }
+}
 
 
 </script>
