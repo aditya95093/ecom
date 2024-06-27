@@ -3,92 +3,30 @@ require ('top.php');
 ?>
 
 <style>
-/* General styles for the form containers */
-.contact-form-wrap {
-    background: #f9f9f9;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Style for the title */
-.contact-title h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Style for the input fields */
-.contact-box input {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
-    transition: border-color 0.3s ease-in-out;
-}
-
-.contact-box input:focus {
-    border-color: #4CAF50;
-}
-
-/* Style for the error messages */
-.field_error {
-    color: red;
-    font-size: 15px;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    display: block;
-}
-
-/* Style for the buttons */
-.contact-btn .fv-btn {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.contact-btn .fv-btn:hover {
-    background-color: #45a049;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-    .contact-form-wrap {
-        margin-bottom: 30px;
+    .field_error {
+        color: red;
+        font-size: 15px;
     }
 
-    .contact-title h2 {
-        font-size: 20px;
-    }
-
-    .contact-box input {
-        padding: 12px;
+    .fv-btn {
+        background: #c43b68 none repeat scroll 0 0;
+        border: 1px solid #c43b68;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
         font-size: 14px;
+        font-weight: 600;
+        height: 50px;
+        padding: 0 30px;
+        text-transform: uppercase;
+        transition: all 0.4s ease 0s;
+        border-radius: 4px;
     }
 
-    .contact-btn .fv-btn {
-        padding: 12px 15px;
-        font-size: 14px;
+    .fv-btn:hover {
+        background: green;
+        border: 1px solid green;
+        color: #fff;
     }
-}
-
-/* Message box styles */
-.form-output {
-    margin-top: 20px;
-}
-
-.form-messege {
-    font-size: 16px;
-    color: #4CAF50;
-}
 </style>
 <!-- Start Bradcaump area -->
 <div class="ht__bradcaump__area"
